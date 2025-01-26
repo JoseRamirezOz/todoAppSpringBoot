@@ -1,24 +1,33 @@
 package com.resolverti.todo.enitities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class Tarea {
+@Table(name="TAREA")
+public @Data class Tarea {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @JsonProperty
+    @Column(name = "ID")
+    private int id;
 
+    @JsonProperty
+    @Column(name = "TITULO")
     private String titulo;
-    private String description;
-    private Boolean completado;
+
+    @JsonProperty
+    @Column(name = "DESCRIPCION")
+    private String descripcion;
+
+    @JsonProperty
+    @Column(name = "COMPLETADO")
+    private Integer completado;
 }
