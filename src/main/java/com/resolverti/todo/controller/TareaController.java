@@ -11,18 +11,19 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/todo")
+@RequestMapping("/api/tareas")
+@CrossOrigin("*")
 public class TareaController {
     @Autowired
     TareaService tareasService;
 
 
-    @GetMapping("/findAll")
+    @GetMapping
     public List<Tarea> listarTareas(){
         return tareasService.getAllTareas();
     }
 
-    @GetMapping("/getById/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Tarea> obtenerTarea(@PathVariable  Long id){
         Optional<Tarea> tarea = tareasService.getTareaById(id);
         return tarea.map(value -> ResponseEntity.ok().body(value)).orElse(
@@ -30,13 +31,13 @@ public class TareaController {
     }
 
 
-    @PostMapping("/saveTarea")
+    @PostMapping
     public ResponseEntity<Tarea> guardarTarea(@RequestBody Tarea tarea){
         Tarea tareaGuardada = tareasService.createTarea(tarea);
         return ResponseEntity.status(HttpStatus.CREATED).body(tareaGuardada);
     }
 
-    @PutMapping ("/updateTarea/{id}")
+    @PutMapping ("/{id}")
     public ResponseEntity<Tarea> updateTarea(@PathVariable Long id, @RequestBody Tarea tarea){
         Tarea tareaUpdate = tareasService.updateTarea(id,tarea);
         if(tareaUpdate != null){
@@ -46,7 +47,7 @@ public class TareaController {
         }
     }
 
-    @PutMapping("/deleteById/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTarea(@PathVariable Long id){
         tareasService.deleteTarea(id);
         return ResponseEntity.noContent().build();

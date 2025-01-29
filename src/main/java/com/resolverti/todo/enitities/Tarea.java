@@ -29,5 +29,5 @@ public @Data class Tarea {
 
     @JsonProperty
     @Column(name = "COMPLETADO")
-    private Integer completado;
+    private boolean completado;
 }
